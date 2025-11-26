@@ -19,14 +19,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable()) // Biztonsági ellenőrzés egyszerűsítése
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/regisztral", "/css/**", "/js/**", "/images/**").permitAll()
+                        // EZEKET AZ OLDALAKAT MINDENKI LÁTHATJA:
+                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/regisztral", "/regisztral_feldolgoz").permitAll()
+                        .requestMatchers("/kapcsolat", "/kapcsolat_feldolgoz").permitAll()
+
+                        // Minden más oldalhoz (pl. /uzenetek) be kell jelentkezni:
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
+                        .loginPage("/login").permitAll() // Ha lenne egyedi login oldalunk
+                        .defaultSuccessUrl("/", true) // Sikeres belépés után ide visz
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")

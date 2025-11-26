@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Notebook Nyilvántartó</title>
@@ -7,36 +8,71 @@
 </head>
 <body>
 
-<div class="container mt-5">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">Notebook Shop</a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Főoldal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/kapcsolat">Kapcsolat</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" href="/uzenetek">Üzenetek (Admin)</a>
+                </li>
+            </ul>
+
+            <div class="d-flex">
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/login" class="btn btn-outline-light me-2">Bejelentkezés</a>
+                    <a href="/regisztral" class="btn btn-primary">Regisztráció</a>
+                </div>
+
+                <div sec:authorize="isAuthenticated()" class="text-white d-flex align-items-center">
+                    <span class="me-3">Szia, <b sec:authentication="name">User</b>!</span>
+                    <a href="/logout" class="btn btn-danger btn-sm">Kijelentkezés</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
     <h1 class="text-center mb-4">Notebook Kínálat</h1>
 
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Gyártó</th>
-            <th>Típus</th>
-            <th>Kijelző</th>
-            <th>Memória (GB)</th>
-            <th>Merevlemez</th>
-            <th>Ár (Ft)</th>
-            <th>Processzor</th> <th>Oprendszer</th> </tr>
-        </thead>
-        <tbody>
-        <tr th:each="gep : ${gepek}">
-            <td th:text="${gep.id}">1</td>
-            <td th:text="${gep.gyarto}">Dell</td>
-            <td th:text="${gep.tipus}">Inspiron</td>
-            <td th:text="${gep.kijelzo} + ' col'">15.6</td>
-            <td th:text="${gep.memoria}">8</td>
-            <td th:text="${gep.merevlemez}">256 SSD</td>
-            <td th:text="${gep.ar}">150000</td>
-
-            <td th:text="${gep.processzor.gyarto} + ' ' + ${gep.processzor.modell}">Intel i5</td>
-            <td th:text="${gep.oprendszer.nev}">Windows 10</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Gyártó</th>
+                <th>Típus</th>
+                <th>Kijelző</th>
+                <th>Memória (GB)</th>
+                <th>Merevlemez</th>
+                <th>Ár (Ft)</th>
+                <th>Processzor</th>
+                <th>Oprendszer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="gep : ${gepek}">
+                <td th:text="${gep.id}"></td>
+                <td th:text="${gep.gyarto}"></td>
+                <td th:text="${gep.tipus}"></td>
+                <td th:text="${gep.kijelzo} + ' col'"></td>
+                <td th:text="${gep.memoria}"></td>
+                <td th:text="${gep.merevlemez}"></td>
+                <td th:text="${gep.ar}"></td>
+                <td th:text="${gep.processzor.gyarto} + ' ' + ${gep.processzor.modell}"></td>
+                <td th:text="${gep.oprendszer.nev}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
