@@ -2,6 +2,7 @@ package com.example.notebook.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "processzor")
@@ -15,6 +16,7 @@ public class Processzor {
     private String modell;
 
     @OneToMany(mappedBy = "processzor")
+    @JsonIgnore
     private List<Gep> gepek;
 
     // Getterek és Setterek

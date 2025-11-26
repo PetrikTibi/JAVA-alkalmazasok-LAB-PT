@@ -24,7 +24,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // EZEKET AZ OLDALAKAT MINDENKI LÁTHATJA:
                         .requestMatchers("/", "/index", "/regisztral", "/regisztral_feldolgoz",
-                                "/kapcsolat", "/kapcsolat_feldolgoz", "/diagram",
+                                "/kapcsolat", "/kapcsolat_feldolgoz", "/diagram", "/api/**",
                                 "/css/**", "/js/**", "/images/**").permitAll()
 
                         // Minden más oldalhoz (pl. /uzenetek) be kell jelentkezni:

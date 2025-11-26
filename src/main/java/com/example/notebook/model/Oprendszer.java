@@ -2,6 +2,7 @@ package com.example.notebook.model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "oprendszer")
@@ -16,6 +17,7 @@ public class Oprendszer {
     // Kapcsolat: Egy oprendszer -> Több gép
     // A "mappedBy" azt jelzi, hogy a Gep osztály "oprendszer" mezője a tulajdonos
     @OneToMany(mappedBy = "oprendszer")
+    @JsonIgnore
     private List<Gep> gepek;
 
     // Getterek és Setterek
