@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gép Kezelése</title>
+    <link href="https://bootswatch.com/5/lux/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5 col-md-6">
+    <div class="card border-primary mb-3 shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="text-center" th:text="${gep.id} ? 'Gép Szerkesztése' : 'Új Gép Felvitele'"></h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/gep/ment}" th:object="${gep}" method="post">
+
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="mb-3">
+                    <label class="form-label">Gyártó:</label>
+                    <input type="text" th:field="*{gyarto}" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Típus:</label>
+                    <input type="text" th:field="*{tipus}" class="form-control" required />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Kijelző (col):</label>
+                        <input type="number" step="0.1" th:field="*{kijelzo}" class="form-control" required />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Memória (GB):</label>
+                        <input type="number" th:field="*{memoria}" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Merevlemez:</label>
+                    <input type="text" th:field="*{merevlemez}" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ár (Ft):</label>
+                    <input type="number" th:field="*{ar}" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Processzor:</label>
+                    <select th:field="*{processzor}" class="form-select">
+                        <option th:each="proc : ${processzorok}"
+                                th:value="${proc.id}"
+                                th:text="${proc.gyarto} + ' ' + ${proc.modell}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Operációs rendszer:</label>
+                    <select th:field="*{oprendszer}" class="form-select">
+                        <option th:each="os : ${oprendszerek}"
+                                th:value="${os.id}"
+                                th:text="${os.nev}"></option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">Mentés</button>
+                    <a href="/" class="btn btn-outline-secondary">Mégse</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

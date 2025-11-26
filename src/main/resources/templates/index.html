@@ -8,21 +8,20 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
     <div class="container">
         <a class="navbar-brand" href="/">Notebook Shop</a>
 
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">Főoldal</a>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Főoldal</a></li>
+                <li class="nav-item"><a class="nav-link" href="/diagram">Diagram</a></li>
+                <li class="nav-item"><a class="nav-link" href="/kapcsolat">Kapcsolat</a></li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link fw-bold text-warning" href="/gep/uj">ÚJ GÉP FELVITELE (CRUD)</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/diagram">Diagram</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/kapcsolat">Kapcsolat</a>
-                </li>
+
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/uzenetek">Üzenetek (Admin)</a>
                 </li>
@@ -30,8 +29,8 @@
 
             <div class="d-flex">
                 <div sec:authorize="!isAuthenticated()">
-                    <a href="/login" class="btn btn-outline-light me-2">Bejelentkezés</a>
-                    <a href="/regisztral" class="btn btn-primary">Regisztráció</a>
+                    <a href="/login" class="btn btn-secondary me-2">Bejelentkezés</a>
+                    <a href="/regisztral" class="btn btn-info">Regisztráció</a>
                 </div>
 
                 <div sec:authorize="isAuthenticated()" class="text-white d-flex align-items-center">
@@ -44,37 +43,52 @@
 </nav>
 
 <div class="container">
-    <h1 class="text-center mb-4">Notebook Kínálat</h1>
+    <div class="card border-primary mb-3 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Notebook Kínálat</span>
+            <a sec:authorize="isAuthenticated()" href="/gep/uj" class="btn btn-sm btn-success">
+                + Új Gép Hozzáadása
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>Gyártó</th>
+                        <th>Típus</th>
+                        <th>Kijelző</th>
+                        <th>Memória</th>
+                        <th>Merevlemez</th>
+                        <th>Ár</th>
+                        <th>Processzor</th>
+                        <th>Oprendszer</th>
+                        <th sec:authorize="isAuthenticated()">Műveletek</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="gep : ${gepek}">
+                        <td th:text="${gep.id}"></td>
+                        <td th:text="${gep.gyarto}"></td>
+                        <td th:text="${gep.tipus}"></td>
+                        <td th:text="${gep.kijelzo} + ' col'"></td>
+                        <td th:text="${gep.memoria} + ' GB'"></td>
+                        <td th:text="${gep.merevlemez}"></td>
+                        <td class="fw-bold" th:text="${gep.ar} + ' Ft'"></td>
+                        <td th:text="${gep.processzor.gyarto} + ' ' + ${gep.processzor.modell}"></td>
+                        <td th:text="${gep.oprendszer.nev}"></td>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Gyártó</th>
-                <th>Típus</th>
-                <th>Kijelző</th>
-                <th>Memória (GB)</th>
-                <th>Merevlemez</th>
-                <th>Ár (Ft)</th>
-                <th>Processzor</th>
-                <th>Oprendszer</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="gep : ${gepek}">
-                <td th:text="${gep.id}"></td>
-                <td th:text="${gep.gyarto}"></td>
-                <td th:text="${gep.tipus}"></td>
-                <td th:text="${gep.kijelzo} + ' col'"></td>
-                <td th:text="${gep.memoria}"></td>
-                <td th:text="${gep.merevlemez}"></td>
-                <td th:text="${gep.ar}"></td>
-                <td th:text="${gep.processzor.gyarto} + ' ' + ${gep.processzor.modell}"></td>
-                <td th:text="${gep.oprendszer.nev}"></td>
-            </tr>
-            </tbody>
-        </table>
+                        <td sec:authorize="isAuthenticated()">
+                            <a th:href="@{/gep/szerkeszt/{id}(id=${gep.id})}" class="btn btn-warning btn-sm">Szerk.</a>
+                            <a th:href="@{/gep/torol/{id}(id=${gep.id})}" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Biztosan törölni akarod?');">Törlés</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
