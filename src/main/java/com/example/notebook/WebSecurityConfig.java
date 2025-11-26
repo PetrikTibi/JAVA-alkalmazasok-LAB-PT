@@ -23,9 +23,9 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Biztonsági ellenőrzés egyszerűsítése
                 .authorizeHttpRequests(auth -> auth
                         // EZEKET AZ OLDALAKAT MINDENKI LÁTHATJA:
-                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/regisztral", "/regisztral_feldolgoz").permitAll()
-                        .requestMatchers("/kapcsolat", "/kapcsolat_feldolgoz").permitAll()
+                        .requestMatchers("/", "/index", "/regisztral", "/regisztral_feldolgoz",
+                                "/kapcsolat", "/kapcsolat_feldolgoz", "/diagram",
+                                "/css/**", "/js/**", "/images/**").permitAll()
 
                         // Minden más oldalhoz (pl. /uzenetek) be kell jelentkezni:
                         .anyRequest().authenticated()

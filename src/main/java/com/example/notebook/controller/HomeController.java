@@ -14,16 +14,23 @@ public class HomeController {
         this.gepRepo = gepRepo;
     }
 
-    // Főoldal
+    // FŐOLDAL
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("gepek", gepRepo.findAll());
         return "index";
     }
 
-
+    // BEJELENTKEZÉS
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    // DIAGRAM OLDAL (EZ HIÁNYZOTT VAGY VOLT ROSSZ HELYEN)
+    @GetMapping("/diagram")
+    public String diagram(Model model) {
+        model.addAttribute("gepek", gepRepo.findAll());
+        return "diagram";
     }
 }
