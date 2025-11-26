@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notebook Nyilvántartó</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Notebook Kínálat</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Gyártó</th>
+            <th>Típus</th>
+            <th>Kijelző</th>
+            <th>Memória (GB)</th>
+            <th>Merevlemez</th>
+            <th>Ár (Ft)</th>
+            <th>Processzor</th> <th>Oprendszer</th> </tr>
+        </thead>
+        <tbody>
+        <tr th:each="gep : ${gepek}">
+            <td th:text="${gep.id}">1</td>
+            <td th:text="${gep.gyarto}">Dell</td>
+            <td th:text="${gep.tipus}">Inspiron</td>
+            <td th:text="${gep.kijelzo} + ' col'">15.6</td>
+            <td th:text="${gep.memoria}">8</td>
+            <td th:text="${gep.merevlemez}">256 SSD</td>
+            <td th:text="${gep.ar}">150000</td>
+
+            <td th:text="${gep.processzor.gyarto} + ' ' + ${gep.processzor.modell}">Intel i5</td>
+            <td th:text="${gep.oprendszer.nev}">Windows 10</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
