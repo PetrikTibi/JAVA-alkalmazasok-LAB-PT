@@ -11,6 +11,10 @@
     <groupId>com.example</groupId>
     <artifactId>notebook</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>war</packaging>
+
+
     <name>notebook</name>
     <description>notebook</description>
     <url/>
@@ -91,6 +95,12 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
