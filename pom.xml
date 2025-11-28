@@ -104,6 +104,7 @@
     </dependencies>
 
     <build>
+        <finalName>GDAZA8-gy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
